@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
+const compression = require('compression');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const authRouter = require('./routers/auth');
@@ -12,6 +13,7 @@ const path = require('path');
 dotenv.config();
 
 app.use(express.json());
+app.use(compression());
 app.use(morgan('dev'));
 app.use('/images', express.static(path.join(__dirname, '/images')));
 
