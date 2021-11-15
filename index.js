@@ -35,12 +35,19 @@ app.post('/api/upload', upload.single('file'), (req, res) => {
     res.status(200).send('File has been uploaded!')
 })
 
+app.use(express.static(path.join(__dirname, "../client/build")));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+});
+
+
 app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
 app.use('/api/posts', postRouter);
 app.use('/api/categories', catRouter);
 
-const port = process.env.PORT;
+const port = process.env.PORT || 5001;
 
 app.listen(port, ()=>{
     console.log(`Server is running on port ${port}`);
